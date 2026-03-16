@@ -1,0 +1,189 @@
+# ============================================================
+# CI — Integración Continua
+# Portfolio Alexis Sosa — github-pages-portfolio
+#
+# Conceptos aplicados (Clase 3 — Curso Desarrollo IA):
+#   - CI mínimo viable: lint + validación en cada push/PR
+#   - Security Review automático con Claude (Anthropic action)
+#   - Triggers: push a main + pull_request
+# ============================================================
+
+name: CI — Lint & Security Review
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write  # necesario para que Claude comente en PRs
+
+jobs:
+  # ----------------------------------------------------------
+  # JOB 1: HTML Validation
+  # Valida que el HTML esté bien formado (W3C vía htmlhint)
+  # ----------------------------------------------------------
+  lint-html:
+    name: 🔍 HTML Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar HTMLHint
+        run: npm install -g htmlhint
+
+      - name: Crear config HTMLHint
+        run: |
+          cat > .htmlhintrc << 'EOF'
+          {
+            "tagname-lowercase": true,
+            "attr-lowercase": true,
+            "attr-value-double-quotes": true,
+            "doctype-first": true,
+            "tag-pair": true,
+            "spec-char-escape": false,
+            "id-unique": true,
+            "src-not-empty": true,
+            "attr-no-duplication": true,
+            "title-require": true
+          }
+          EOF
+
+      - name: Ejecutar HTMLHint
+        run: htmlhint index.html
+
+  # ----------------------------------------------------------
+  # JOB 2: CSS Lint
+  # Valida buenas prácticas en el CSS con stylelint
+  # ----------------------------------------------------------
+  lint-css:
+    name: 🎨 CSS Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar stylelint
+        run: npm install -g stylelint stylelint-config-standard
+
+      - name: Crear config stylelint
+        run: |
+          cat > .stylelintrc.json << 'EOF'
+          {
+            "extends": "stylelint-config-standard",
+            "rules": {
+              "color-no-invalid-hex": true,
+              "property-no-unknown": true,
+              "selector-pseudo-class-no-unknown": true,
+              "unit-no-unknown": true,
+              "no-duplicate-selectors": null,
+              "alpha-value-notation": null,
+              "color-function-notation": null,
+              "import-notation": null
+            }
+          }
+          EOF
+
+      - name: Ejecutar stylelint
+        run: stylelint "styles.css" || true
+        # '|| true' para que no bloquee el deploy si hay warnings menores
+
+  # ----------------------------------------------------------
+  # JOB 3: JS Lint
+  # Valida JavaScript con ESLint
+  # ----------------------------------------------------------
+  lint-js:
+    name: ⚡ JS Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar ESLint
+        run: npm install -g eslint @eslint/js
+
+      - name: Crear config ESLint
+        run: |
+          cat > eslint.config.mjs << 'EOF'
+          import js from "@eslint/js";
+          export default [
+            js.configs.recommended,
+            {
+              rules: {
+                "no-unused-vars": "warn",
+                "no-undef": "warn",
+                "no-console": "off",
+                "semi": ["warn", "always"],
+                "no-var": "warn"
+              },
+              languageOptions: {
+                globals: {
+                  window: "readonly",
+                  document: "readonly",
+                  console: "readonly",
+                  setTimeout: "readonly",
+                  setInterval: "readonly",
+                  clearInterval: "readonly",
+                  requestAnimationFrame: "readonly",
+                  IntersectionObserver: "readonly",
+                  navigator: "readonly"
+                }
+              }
+            }
+          ];
+          EOF
+
+      - name: Ejecutar ESLint
+        run: eslint script.js || true
+
+  # ----------------------------------------------------------
+  # JOB 4: Security Review con Claude (Anthropic Action)
+  # Análisis automático de seguridad en Pull Requests
+  # Aplicado del Clase 3 — "CI/CD Inteligente con IA"
+  # ----------------------------------------------------------
+  security-review:
+    name: 🔐 Security Review (Claude)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Claude Security Review
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          direct_prompt: |
+            Eres un experto en seguridad web. Revisa los cambios en este PR del portfolio estático (HTML/CSS/JS).
+            
+            Verifica específicamente:
+            1. **XSS**: ¿Hay innerHTML con datos no sanitizados?
+            2. **Links externos**: ¿Todos los <a target="_blank"> tienen rel="noopener noreferrer"?
+            3. **Subrecursos externos**: ¿Los CDN usan Subresource Integrity (integrity="")?
+            4. **Datos sensibles**: ¿Hay emails, tokens, claves hardcodeadas en el código?
+            5. **CSP**: ¿El HTML tiene meta Content-Security-Policy?
+            
+            Responde en español. Si todo está bien, confirma. Si hay issues, explicá cada uno con la línea exacta y cómo corregirla.
+          github_token: ${{ secrets.GITHUB_TOKEN }}

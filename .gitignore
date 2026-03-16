@@ -1,0 +1,15 @@
+# Archivos de configuración de linters (generados por CI)
+.htmlhintrc
+.stylelintrc.json
+eslint.config.mjs
+node_modules/
+package-lock.json
+package.json
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+*.swo

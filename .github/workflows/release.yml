@@ -1,0 +1,39 @@
+# ============================================================
+# Release Please — Versionado Automático
+# Portfolio Alexis Sosa — github-pages-portfolio
+#
+# Conceptos aplicados (Clase 3 — Curso Desarrollo IA):
+#   - Release Please (Google flow) como se enseñó en el curso
+#   - Conventional Commits → PR de Release automático
+#   - Genera Git tags (v1.0.0, v1.1.0, etc.) y GitHub Release
+#   - Cada merge del Release PR = nuevo tag + notas de release
+#
+# Cómo funciona:
+#   1. Hacés commits con prefijos: feat:, fix:, docs:, chore:
+#   2. Release Please detecta los commits y abre un PR con bumped version
+#   3. Al mergear ese PR → se crea el tag y el GitHub Release
+# ============================================================
+
+name: Release Please — Versionado Automático
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: 🏷️ Release Please
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Release Please Action
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: simple
+          # Para proyectos sin package.json usamos "simple"
+          # Crea automáticamente CHANGELOG.md y bumps de versión

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alexis Sosa — Técnico en Ciberseguridad | Seguridad & Operaciones de Infraestructura. Homelab, SOC, Penetration Testing, IA Aplicada.">
+    <meta name="keywords" content="ciberseguridad, SOC, pentesting, homelab, Proxmox, Wazuh, Suricata, Elastic, OSINT">
+    <meta name="author" content="Alexis Sosa">
+    <meta property="og:title" content="Alexis Sosa | Ciberseguridad & Infraestructura">
+    <meta property="og:description" content="Técnico Superior en Seguridad Informática. Homelab activo, CTF, IA aplicada.">
+    <meta property="og:type" content="website">
+    <title>Alexis Sosa | Ciberseguridad & Infraestructura</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Particles canvas -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home" class="logo-link">ALEXIS.SOSA</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Inicio</a></li>
+                <li><a href="#about" class="nav-link">Sobre mí</a></li>
+                <li><a href="#skills" class="nav-link">Stack</a></li>
+                <li><a href="#homelab" class="nav-link">Homelab</a></li>
+                <li><a href="#experience" class="nav-link">Experiencia</a></li>
+                <li><a href="#projects" class="nav-link">Proyectos</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+
+                <h1 class="hero-name">Alexis Sosa</h1>
+                <h2 class="hero-title">
+                    Técnico en Ciberseguridad <span class="divider-pipe">|</span>
+                    <span id="typedText" class="typed-text"></span><span class="cursor">|</span>
+                </h2>
+                <p class="hero-description">
+                    Técnico Superior en Seguridad Informática. Me especializo en la intersección entre
+                    <strong>infraestructura, seguridad y automatización</strong>. Corro un homelab con servicios
+                    reales de seguridad en producción y participo activamente en CTFs junto a un equipo.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+                    <a href="#contact" class="btn btn-secondary">Contactar</a>
+                </div>
+                <div class="hero-social">
+                    <a href="https://www.linkedin.com/in/alexis-sosa-52412623b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/Alexso9410" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://cyberdefenders.org/p/ales04" target="_blank" rel="noopener noreferrer" aria-label="CyberDefenders">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4.18l6 2.66V11c0 3.83-2.58 7.35-6 8.68-3.42-1.33-6-4.85-6-8.68V7.84l6-2.66z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="terminal-card">
+                    <div class="terminal-header">
+                        <div class="terminal-dot dot-red"></div>
+                        <div class="terminal-dot dot-yellow"></div>
+                        <div class="terminal-dot dot-green"></div>
+                        <span class="terminal-title">~/homelab/status</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">
+                            <span class="t-prompt">$ </span>
+                            <span class="t-cmd">systemctl status wazuh</span>
+                        </div>
+                        <div class="terminal-line t-output t-green">● wazuh-manager.service — active (running)</div>
+                        <div class="terminal-line">
+                            <span class="t-prompt">$ </span>
+                            <span class="t-cmd">suricata --status</span>
+                        </div>
+                        <div class="terminal-line t-output t-green">● IDS/IPS engine — active, monitoring</div>
+                        <div class="terminal-line">
+                            <span class="t-prompt">$ </span>
+                            <span class="t-cmd">docker ps --format "{{.Names}}"</span>
+                        </div>
+                        <div class="terminal-line t-output t-cyan">elastic · kibana · n8n · nextcloud</div>
+                        <div class="terminal-line t-output t-cyan">adguard · nginx · immich · postgres</div>
+                        <div class="terminal-line">
+                            <span class="t-prompt">$ </span>
+                            <span class="t-cmd blink-cursor">_</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        Soy <strong>Técnico Superior en Seguridad Informática</strong>, apasionado por la ciberseguridad
+                        con foco en la intersección entre <strong>infraestructura, seguridad y automatización</strong>.
+                        Me interesa entender los sistemas desde adentro: cómo se construyen, cómo se aseguran
+                        y cómo se defienden.
+                    </p>
+                    <p>
+                        Mantengo un <strong>homelab con servicios reales de seguridad corriendo en producción</strong>,
+                        y participo activamente en <strong>CTFs junto a un equipo de 5 integrantes</strong> en plataformas
+                        como HackTheBox, TryHackMe y CyberDefenders. Tengo un
+                        <strong>writeup oficial publicado y aceptado por CyberDefenders</strong> como guía de la plataforma.
+                    </p>
+                    <div class="about-focus">
+                        <div class="focus-item">
+                            <span class="focus-icon">🏗️</span>
+                            <div>
+                                <strong>Seguridad en infraestructura / SysAdmin / DevSecOps</strong>
+                                <p>Operar entornos reales, asegurarlos y automatizarlos</p>
+                            </div>
+                        </div>
+                        <div class="focus-item">
+                            <span class="focus-icon">🤖</span>
+                            <div>
+                                <strong>IA aplicada y agentes autónomos</strong>
+                                <p>LLMs, automatización inteligente e integración en flujos de seguridad</p>
+                            </div>
+                        </div>
+                        <div class="focus-item">
+                            <span class="focus-icon">🔍</span>
+                            <div>
+                                <strong>OSINT & Threat Intelligence</strong>
+                                <p>Inteligencia de fuentes abiertas, análisis de amenazas e investigación digital</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card" data-count="12" data-suffix="+">
+                        <div class="stat-number" data-target="12">12+</div>
+                        <div class="stat-label">Servicios en Producción</div>
+                    </div>
+                    <div class="stat-card" data-count="2" data-suffix="+">
+                        <div class="stat-number" data-target="2">2+</div>
+                        <div class="stat-label">Años en CTF Activo</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Writeup Oficial Publicado</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Integrantes en Equipo CTF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Stack Tecnológico</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="skill-category-title">🔒 Seguridad & Monitoreo</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag tag-sec">Wazuh SIEM</span>
+                        <span class="skill-tag tag-sec">Suricata IDS/IPS</span>
+                        <span class="skill-tag tag-sec">Elastic SIEM</span>
+                        <span class="skill-tag tag-sec">Nessus</span>
+                        <span class="skill-tag tag-sec">Zabbix</span>
+                        <span class="skill-tag tag-sec">Sysmon</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category-title">🕵️ Auditoría & OSINT</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag tag-osint">Burp Suite</span>
+                        <span class="skill-tag tag-osint">Nmap</span>
+                        <span class="skill-tag tag-osint">Wireshark</span>
+                        <span class="skill-tag tag-osint">Shodan</span>
+                        <span class="skill-tag tag-osint">OWASP Top 10</span>
+                        <span class="skill-tag tag-osint">Metasploit</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category-title">☁️ Infraestructura</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag tag-infra">Proxmox VE</span>
+                        <span class="skill-tag tag-infra">Docker</span>
+                        <span class="skill-tag tag-infra">LXC</span>
+                        <span class="skill-tag tag-infra">OPNsense</span>
+                        <span class="skill-tag tag-infra">Tailscale</span>
+                        <span class="skill-tag tag-infra">GNS3</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category-title">🤖 IA & Automatización</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag tag-ai">Ollama (LLM local)</span>
+                        <span class="skill-tag tag-ai">LiteLLM Gateway</span>
+                        <span class="skill-tag tag-ai">n8n</span>
+                        <span class="skill-tag tag-ai">FastAPI</span>
+                        <span class="skill-tag tag-ai">pgvector</span>
+                        <span class="skill-tag tag-ai">python-telegram-bot v20</span>
+                        <span class="skill-tag tag-ai">OpenWebUI</span>
+                        <span class="skill-tag tag-ai">asyncpg</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category-title">💻 Lenguajes & Scripting</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Bash</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3 class="skill-category-title">📊 Plataformas CTF</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag tag-ctf">HackTheBox</span>
+                        <span class="skill-tag tag-ctf">TryHackMe</span>
+                        <span class="skill-tag tag-ctf">CyberDefenders</span>
+                        <span class="skill-tag tag-ctf">The Hacker Labs</span>
+                        <span class="skill-tag tag-ctf">Cisco NetAcad</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Homelab Section -->
+    <section id="homelab" class="homelab">
+        <div class="container">
+            <h2 class="section-title">Homelab</h2>
+            <p class="homelab-intro">
+                Corro <strong>Proxmox VE</strong> como hypervisor sobre hardware dedicado, con una estación de trabajo
+                separada para desarrollo, simulación de redes (GNS3) y virtualización adicional.
+                Todos los servicios están activos en producción.
+            </p>
+            <div class="homelab-table-wrapper">
+                <table class="homelab-table">
+                    <thead>
+                        <tr>
+                            <th>Servicio</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="service-name">🛡️ Wazuh</span></td>
+                            <td>SIEM — Correlación de eventos y alertas de seguridad</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🔥 Suricata</span></td>
+                            <td>IDS/IPS — Detección de intrusiones en red</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">📊 Elastic/Kibana</span></td>
+                            <td>Stack de análisis y visualización de logs</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🔒 OPNsense</span></td>
+                            <td>Firewall perimetral, reglas, VLANs</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🌐 Tailscale</span></td>
+                            <td>VPN mesh zero-config para acceso remoto seguro</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">⚙️ n8n</span></td>
+                            <td>Automatización de workflows e integraciones</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🐘 PostgreSQL + pgvector</span></td>
+                            <td>Base de datos con soporte de embeddings vectoriales</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🤖 Ollama + LiteLLM</span></td>
+                            <td>LLMs locales y gateway unificado de modelos</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">📷 Immich + Nextcloud</span></td>
+                            <td>Almacenamiento privado, backups, fotos auto-hospedadas</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🚫 AdGuard</span></td>
+                            <td>DNS filtering y bloqueo de rastreadores</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="service-name">🔁 Nginx</span></td>
+                            <td>Reverse proxy para servicios internos</td>
+                            <td><span class="status-badge status-active">Activo</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experiencia & Educación</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-work">Experiencia</span>
+                        <h3 class="timeline-title">Fuerza de Seguridad Pública</h3>
+                        <h4 class="timeline-company">Sector público — Argentina</h4>
+                        <span class="timeline-date">Actualidad</span>
+                        <p class="timeline-description">Operaciones en contexto institucional de seguridad.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-work">Experiencia</span>
+                        <h3 class="timeline-title">Pasante — Ciberseguridad</h3>
+                        <h4 class="timeline-company">Heimdall Agency</h4>
+                        <span class="timeline-date">Pasantía</span>
+                        <p class="timeline-description">Aplicación práctica de técnicas de análisis y seguridad ofensiva/defensiva.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-volunteer">Voluntariado</span>
+                        <h3 class="timeline-title">Tool Tester</h3>
+                        <h4 class="timeline-company">ArgOS</h4>
+                        <span class="timeline-date">Actualidad</span>
+                        <p class="timeline-description">Pruebas de seguridad y análisis de herramientas. Argentina.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-edu">Educación</span>
+                        <h3 class="timeline-title">Técnico Superior en Seguridad Informática</h3>
+                        <h4 class="timeline-company">Teclab Instituto Técnico Superior</h4>
+                        <span class="timeline-date">Enero 2024 – Actualidad</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-edu">Educación</span>
+                        <h3 class="timeline-title">Tecnología de la Información</h3>
+                        <h4 class="timeline-company">Cisco Networking Academy</h4>
+                        <span class="timeline-date">Certificado</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-edu">Educación</span>
+                        <h3 class="timeline-title">Fortinet NSE — Network Security</h3>
+                        <h4 class="timeline-company">Fortinet Training Institute</h4>
+                        <span class="timeline-date">Certificado</span>
+                        <p class="timeline-description">NSE 1 · NSE 2 — fundamentos de seguridad de red y amenazas actuales.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-badge badge-ctf">CTF</span>
+                        <h3 class="timeline-title">Estudiante & CTF Active</h3>
+                        <h4 class="timeline-company">TryHackMe · HackTheBox · CyberDefenders</h4>
+                        <span class="timeline-date">Marzo 2024 – Actualidad</span>
+                        <p class="timeline-description">Equipo de 5 integrantes — writeup oficial publicado en CyberDefenders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Proyectos Destacados</h2>
+            <div class="projects-grid">
+                <!-- Project 1: Bot IA -->
+                <div class="project-card project-featured">
+                    <div class="project-header">
+                        <h3 class="project-title">🤖 Asistente IA Multi-Agente</h3>
+                        <span class="project-badge badge-ai">IA · Python</span>
+                    </div>
+                    <p class="project-description">
+                        Bot con <strong>arquitectura multi-agente</strong> que integra LLMs locales y cloud mediante
+                        LiteLLM, memoria semántica con pgvector, orquestación via n8n y skills especializadas de
+                        OSINT, monitoreo y automatización.
+                    </p>
+                    <div class="project-tech">
+                        <code>FastAPI</code><code>LiteLLM</code><code>pgvector</code><code>n8n</code><code>Ollama</code>
+                    </div>
+                    <div class="project-diagram">
+                        <pre class="diagram-text">red social → Bot (Python/FastAPI)
+      ↓
+LiteLLM Gateway → cloud + local
+      ↓
+Router → skills especializadas
+      ↓
+PostgreSQL + pgvector · n8n</pre>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://github.com/Alexso9410" target="_blank" class="project-link">
+                            Ver en GitHub →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Homelab SOC -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">🛡️ Homelab SOC Completo</h3>
+                        <span class="project-badge badge-infra">Infraestructura</span>
+                    </div>
+                    <p class="project-description">
+                        Laboratorio personal con <strong>Proxmox VE</strong> como hypervisor. Servicios de seguridad
+                        reales en producción: Wazuh SIEM, Suricata IDS/IPS, Elastic/Kibana, OPNsense firewall y
+                        más de 10 servicios corriendo 24/7.
+                    </p>
+                    <div class="project-tech">
+                        <code>Proxmox</code><code>Wazuh</code><code>Suricata</code><code>Elastic</code><code>OPNsense</code>
+                    </div>
+                    <div class="project-footer">
+                        <a href="#homelab" class="project-link">
+                            Ver detalles del Homelab →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Writeup oficial -->
+                <div class="project-card project-highlight">
+                    <div class="project-header">
+                        <h3 class="project-title">📝 Writeup Oficial CyberDefenders</h3>
+                        <span class="project-badge badge-ctf">CTF · Publicado</span>
+                    </div>
+                    <p class="project-description">
+                        <strong>Yara Trap Lab</strong> — Writeup elaborado junto al equipo CTF. Aceptado y publicado
+                        como guía oficial de CyberDefenders. Cubre análisis de reglas YARA, detección de malware
+                        y forense aplicado.
+                    </p>
+                    <div class="project-tech">
+                        <code>YARA</code><code>Malware Analysis</code><code>Digital Forensics</code>
+                    </div>
+                    <div class="project-footer">
+                        <a href="https://medium.com/@IgnoranzaSolare" target="_blank" rel="noopener noreferrer" class="project-link">
+                            Leer en Medium →
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="projects-cta">
+                <a href="https://github.com/Alexso9410?tab=repositories" target="_blank" class="btn btn-primary">
+                    Ver más en GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <p class="contact-description">
+                Siempre abierto a nuevas oportunidades, colaboraciones y conversaciones sobre
+                ciberseguridad, infraestructura o IA aplicada.
+            </p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/alexis-sosa-52412623b/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    <div>
+                        <strong>LinkedIn</strong>
+                        <span>alexis-sosa-52412623b</span>
+                    </div>
+                </a>
+                <a href="https://github.com/Alexso9410" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <div>
+                        <strong>GitHub</strong>
+                        <span>@Alexso9410</span>
+                    </div>
+                </a>
+                <a href="mailto:alesosasec@proton.me" class="contact-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21.99 8c0-.72-.37-1.35-.94-1.7L12 1 2.95 6.3C2.38 6.65 2 7.28 2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-.01-10zM12 13L3.74 7.84 12 3l8.26 4.84L12 13z"/>
+                    </svg>
+                    <div>
+                        <strong>ProtonMail</strong>
+                        <span>alesosasec@proton.me</span>
+                    </div>
+                </a>
+                <a href="https://cyberdefenders.org/p/ales04" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4.18l6 2.66V11c0 3.83-2.58 7.35-6 8.68-3.42-1.33-6-4.85-6-8.68V7.84l6-2.66z"/>
+                    </svg>
+                    <div>
+                        <strong>CyberDefenders</strong>
+                        <span>@ales04</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-quote">🛡️ <em>"Build. Break. Defend. Automate."</em></p>
+            <p>&copy; 2026 Alexis Sosa — Todos los derechos reservados.</p>
+            <p class="footer-subtitle">Ciberseguridad · Infraestructura · IA Aplicada</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

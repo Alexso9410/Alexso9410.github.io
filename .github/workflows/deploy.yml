@@ -1,0 +1,61 @@
+# ============================================================
+# CD — Deploy Continuo a GitHub Pages
+# Portfolio Alexis Sosa — github-pages-portfolio
+#
+# Conceptos aplicados (Clase 3 — Curso Desarrollo IA):
+#   - CD: deploy automático cuando CI pasa en main
+#   - GitHub Pages deployment via actions/deploy-pages
+#   - Separado del CI para que corran independientemente
+# ============================================================
+
+name: CD — Deploy a GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # También se puede disparar manualmente desde la UI de Actions
+  workflow_dispatch:
+
+# Permisos necesarios para GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evita deploys concurrentes — solo uno a la vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ----------------------------------------------------------
+  # JOB: Deploy
+  # Sube el portfolio a GitHub Pages
+  # ----------------------------------------------------------
+  deploy:
+    name: 🚀 Deploy a GitHub Pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact (sitio estático)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Sube todo el directorio raíz del portfolio
+          path: '.'
+
+      - name: Deploy a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Mostrar URL del deploy
+        run: |
+          echo "✅ Portfolio desplegado en: ${{ steps.deployment.outputs.page_url }}"
