@@ -197,7 +197,8 @@ jobs:
   # Detecta credenciales hardcodeadas en el código:
   #   - API keys, tokens, contraseñas
   #   - Claves privadas, URLs con credenciales
-  # Cubre el check de "datos sensibles" del security review
+  # Usa binario directo + --no-git para evitar el bug de primer commit
+  # (gitleaks-action@v2 falla cuando el primer commit no tiene padre)
   # 100% gratuito y sin configuración adicional
   # ----------------------------------------------------------
   gitleaks:
@@ -207,11 +208,22 @@ jobs:
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # historial completo para detectar secrets en commits anteriores
 
-      - name: Gitleaks — Detectar Secrets
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GITLEAKS_LICENSE no requerida para repos públicos
+      - name: Instalar Gitleaks
+        run: |
+          GITLEAKS_VERSION="8.24.3"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Escanear secretos en archivos
+        run: |
+          gitleaks detect \
+            --source . \
+            --no-git \
+            --redact \
+            --verbose \
+            --exit-code=1
+        # --no-git: escanea archivos directamente (sin git log)
+        # Evita el error "ambiguous argument" en repos con un solo commit
+        # --exit-code=1: falla el job si encuentra algo real
