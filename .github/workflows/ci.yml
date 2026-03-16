@@ -4,8 +4,10 @@
 #
 # Conceptos aplicados (Clase 3 — Curso Desarrollo IA):
 #   - CI mínimo viable: lint + validación en cada push/PR
-#   - Security Review automático con Claude (Anthropic action)
+#   - Security Review automático con Semgrep (XSS, patrones inseguros)
+#   - Secret scanning con Gitleaks (credenciales hardcodeadas)
 #   - Triggers: push a main + pull_request
+#   - Sin API keys externas — 100% gratuito para repos públicos
 # ============================================================
 
 name: CI — Lint & Security Review
@@ -18,7 +20,8 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write  # necesario para que Claude comente en PRs
+  pull-requests: write  # para que Semgrep reporte en PRs
+  security-events: write  # para subir resultados SARIF a GitHub Security
 
 jobs:
   # ----------------------------------------------------------
@@ -158,32 +161,57 @@ jobs:
         run: eslint script.js || true
 
   # ----------------------------------------------------------
-  # JOB 4: Security Review con Claude (Anthropic Action)
-  # Análisis automático de seguridad en Pull Requests
-  # Aplicado del Clase 3 — "CI/CD Inteligente con IA"
+  # JOB 4: Security Scan con Semgrep
+  # Detecta patrones inseguros en HTML/JS:
+  #   - innerHTML con datos no sanitizados (XSS)
+  #   - eval() y funciones peligrosas
+  #   - Links target="_blank" sin rel="noopener noreferrer"
+  #   - Redirects abiertos, prototype pollution
+  # Gratis para repos públicos — sin API key
+  # Clase 3: "CI/CD Inteligente con IA" → alternativa open source
   # ----------------------------------------------------------
-  security-review:
-    name: 🔐 Security Review (Claude)
+  semgrep-security:
+    name: 🔐 Semgrep Security Scan
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
 
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Claude Security Review
-        uses: anthropics/claude-code-action@beta
+      - name: Ejecutar Semgrep
+        uses: semgrep/semgrep-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          direct_prompt: |
-            Eres un experto en seguridad web. Revisa los cambios en este PR del portfolio estático (HTML/CSS/JS).
-            
-            Verifica específicamente:
-            1. **XSS**: ¿Hay innerHTML con datos no sanitizados?
-            2. **Links externos**: ¿Todos los <a target="_blank"> tienen rel="noopener noreferrer"?
-            3. **Subrecursos externos**: ¿Los CDN usan Subresource Integrity (integrity="")?
-            4. **Datos sensibles**: ¿Hay emails, tokens, claves hardcodeadas en el código?
-            5. **CSP**: ¿El HTML tiene meta Content-Security-Policy?
-            
-            Responde en español. Si todo está bien, confirma. Si hay issues, explicá cada uno con la línea exacta y cómo corregirla.
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          config: >
+            p/javascript
+            p/html
+            p/owasp-top-ten
+            p/xss
+            p/secrets
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+          # SEMGREP_APP_TOKEN es OPCIONAL — sin él corre igualmente en modo local
+          # Si lo agregás (gratis en semgrep.dev) guarda el historial de scans
+
+  # ----------------------------------------------------------
+  # JOB 5: Gitleaks — Secret Scanning
+  # Detecta credenciales hardcodeadas en el código:
+  #   - API keys, tokens, contraseñas
+  #   - Claves privadas, URLs con credenciales
+  # Cubre el check de "datos sensibles" del security review
+  # 100% gratuito y sin configuración adicional
+  # ----------------------------------------------------------
+  gitleaks:
+    name: 🔑 Gitleaks Secret Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # historial completo para detectar secrets en commits anteriores
+
+      - name: Gitleaks — Detectar Secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITLEAKS_LICENSE no requerida para repos públicos
